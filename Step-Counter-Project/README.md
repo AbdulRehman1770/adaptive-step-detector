@@ -1,6 +1,6 @@
-# 🚶‍♂️ Real-Time Step Counter (DSP-Based Peak Detection)
+# 🚶‍♂️ StrideSense: Real-Time Step Counter (DSP-Based Peak Detection)
 
-Hey there! Welcome to my step counter project. This is a Python-based implementation of a walking step counter that processes raw tri-axial accelerometer data (`gFx`, `gFy`, `gFz`) sampled at a relatively low frequency of **10Hz** (tested on walking data from `Person30`).
+Welcome to **StrideSense**! This is a Python-based implementation of a walking step counter that processes raw tri-axial accelerometer data (`gFx`, `gFy`, `gFz`) sampled at a relatively low frequency of **10Hz** (tested on walking data from `Person30`).
 
 The algorithm successfully cuts through the noise of raw sensor movement and achieves around **85% accuracy** in detecting actual steps.
 
@@ -19,7 +19,9 @@ Here is the step-by-step breakdown of how the code transforms messy sensor readi
 
 ### 1. Vector Magnitude Calculation
 Instead of relying on just one axis (like X or Y, which can change depending on how the phone is oriented), we calculate the **Euclidean Norm (Magnitude)** of all three axes:
+
 $$Magnitude = \sqrt{gFx^2 + gFy^2 + gFz^2}$$
+
 This gives us a single, orientation-independent acceleration force.
 
 ### 2. Butterworth Bandpass Filter
@@ -31,13 +33,17 @@ Even after filtering, the signal can have sharp edges. We apply a **Rolling Mean
 
 ### 4. Adaptive Peak Detection
 Instead of using a hardcoded threshold (which fails if a person walks slower or faster), the algorithm calculates an **adaptive prominence** based on the standard deviation of the signal ($\sigma$):
-$$Prominence = 0.15 \times \text{std\_dev}(signal)$$
+
+$$\text{Prominence} = 0.15 \times \sigma$$
+
+*(Where $\sigma$ represents the standard deviation of the smoothed signal).*
+
 It also enforces a minimum distance constraint (`fs / 3` samples) between peaks to ensure that a single step isn't counted twice.
 
 ---
 
 ## 📊 Performance & Results
-- **Dataset Tested:** "Data/80steps.csv"
+- **Dataset Tested:** `DataSet/person30/talal walking 80.csv`
 - **Sampling Rate:** 10 Hz
 - **Final Accuracy:** **~85%** closely matching the actual manual step count.
 

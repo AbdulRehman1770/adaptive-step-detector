@@ -43,7 +43,7 @@ It also enforces a minimum distance constraint (`fs / 3` samples) between peaks 
 ---
 
 ## 📊 Performance & Results
-- **Dataset Tested:** `DataSet/person30/talal walking 80.csv`
+- **Dataset Tested:** "Data/80steps.csv"
 - **Sampling Rate:** 10 Hz
 - **Final Accuracy:** **~85%** closely matching the actual manual step count.
 
